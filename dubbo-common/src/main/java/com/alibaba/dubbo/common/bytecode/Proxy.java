@@ -66,6 +66,7 @@ public abstract class Proxy {
      * @return Proxy instance.
      */
     public static Proxy getProxy(Class<?>... ics) {
+        // 调用重载方法
         return getProxy(ClassHelper.getClassLoader(Proxy.class), ics);
     }
 
@@ -81,6 +82,7 @@ public abstract class Proxy {
             throw new IllegalArgumentException("interface limit exceeded");
 
         StringBuilder sb = new StringBuilder();
+        // 遍历接口列表
         for (int i = 0; i < ics.length; i++) {
             String itf = ics[i].getName();
             if (!ics[i].isInterface())
