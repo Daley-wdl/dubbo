@@ -22,6 +22,8 @@ import com.alibaba.dubbo.rpc.cluster.Cluster;
 import com.alibaba.dubbo.rpc.cluster.Directory;
 
 /**
+ *  创建并返回 FailoverClusterInvoker 对象
+ *
  * {@link FailoverClusterInvoker}
  *
  */
