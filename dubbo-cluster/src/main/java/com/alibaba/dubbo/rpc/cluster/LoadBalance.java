@@ -27,6 +27,9 @@ import com.alibaba.dubbo.rpc.cluster.loadbalance.RandomLoadBalance;
 import java.util.List;
 
 /**
+ * Dubbo 提供了4种负载均衡实现，
+ * 分别是基于权重随机算法的 RandomLoadBalance、基于最少活跃调用数算法的 LeastActiveLoadBalance、基于 hash 一致性的 ConsistentHashLoadBalance，以及基于加权轮询算法的 RoundRobinLoadBalance
+ *
  * LoadBalance. (SPI, Singleton, ThreadSafe)
  * <p>
  * <a href="http://en.wikipedia.org/wiki/Load_balancing_(computing)">Load-Balancing</a>
