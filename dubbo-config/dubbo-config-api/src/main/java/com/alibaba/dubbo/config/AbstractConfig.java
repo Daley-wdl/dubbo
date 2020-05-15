@@ -98,6 +98,9 @@ public abstract class AbstractConfig implements Serializable {
         return value;
     }
 
+    /**
+     * 读取环境变量和 properties 配置到配置对象
+     */
     protected static void appendProperties(AbstractConfig config) {
         if (config == null) {
             return;
@@ -421,6 +424,9 @@ public abstract class AbstractConfig implements Serializable {
         this.id = id;
     }
 
+    /**
+     * 读取注解配置到配置对象
+     */
     protected void appendAnnotation(Class<?> annotationClass, Object annotation) {
         Method[] methods = annotationClass.getMethods();
         for (Method method : methods) {
