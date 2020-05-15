@@ -56,6 +56,9 @@ public final class Version {
         }
     }
 
+    /**
+     * 从 MAINFEST.MF 中获得版本号。以 spring-boot-starter-1.5.10.RELEASE.jar 举例子
+     */
     public static String getVersion(Class<?> cls, String defaultVersion) {
         try {
             // find version info from MANIFEST.MF first
