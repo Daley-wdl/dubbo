@@ -17,6 +17,8 @@
 package com.alibaba.dubbo.common.extension;
 
 /**
+ * 对象工厂，功能上和 Spring IOC 一致, 向创建的拓展注入其依赖的属性
+ *
  * ExtensionFactory
  */
 @SPI

@@ -25,6 +25,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 对于可以被框架中自动激活加载扩展，@Activate 用于配置扩展被自动激活加载条件。比如，Filter 扩展，有多个实现，使用 @Activate 的扩展可以根据条件被自动加载。
+ *
  * Activate. This annotation is useful for automatically activate certain extensions with the given criteria,
  * for examples: <code>@Activate</code> can be used to load certain <code>Filter</code> extension when there are
  * multiple implementations.
