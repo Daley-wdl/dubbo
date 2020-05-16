@@ -26,6 +26,7 @@ package com.alibaba.dubbo.rpc;
 public interface Exporter<T> {
 
     /**
+     * 获得对应的 Invoker
      * get invoker.
      *
      * @return invoker
@@ -33,6 +34,7 @@ public interface Exporter<T> {
     Invoker<T> getInvoker();
 
     /**
+     * 取消暴露
      * unexport.
      * <p>
      * <code>
