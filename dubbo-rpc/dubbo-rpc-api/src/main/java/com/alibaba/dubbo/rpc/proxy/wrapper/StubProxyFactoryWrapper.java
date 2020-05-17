@@ -42,8 +42,14 @@ public class StubProxyFactoryWrapper implements ProxyFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StubProxyFactoryWrapper.class);
 
+    /**
+     * ProxyFactory$Adaptive 对象
+     */
     private final ProxyFactory proxyFactory;
 
+    /**
+     * Protocol$Adaptive 对象
+     */
     private Protocol protocol;
 
     public StubProxyFactoryWrapper(ProxyFactory proxyFactory) {
@@ -62,6 +68,7 @@ public class StubProxyFactoryWrapper implements ProxyFactory {
             String stub = invoker.getUrl().getParameter(Constants.STUB_KEY, invoker.getUrl().getParameter(Constants.LOCAL_KEY));
             if (ConfigUtils.isNotEmpty(stub)) {
                 Class<?> serviceType = invoker.getInterface();
+                // `stub = true` 的情况，使用接口 + `Stub` 字符串
                 if (ConfigUtils.isDefault(stub)) {
                     if (invoker.getUrl().hasParameter(Constants.STUB_KEY)) {
                         stub = serviceType.getName() + "Stub";
@@ -70,11 +77,13 @@ public class StubProxyFactoryWrapper implements ProxyFactory {
                     }
                 }
                 try {
+                    // 加载 Stub 类
                     Class<?> stubClass = ReflectUtils.forName(stub);
                     if (!serviceType.isAssignableFrom(stubClass)) {
                         throw new IllegalStateException("The stub implementation class " + stubClass.getName() + " not implement interface " + serviceType.getName());
                     }
                     try {
+                        // 创建 Stub 对象，使用带 Service Proxy 对象的构造方法
                         Constructor<?> constructor = ReflectUtils.findConstructor(stubClass, serviceType);
                         proxy = (T) constructor.newInstance(new Object[]{proxy});
                         //export stub service
@@ -100,6 +109,9 @@ public class StubProxyFactoryWrapper implements ProxyFactory {
         return proxy;
     }
 
+    /**
+     * 服务实现的 Service ，不支持 Stub 存根。所以，虽然 <dubbo:service /> 有 stub 配置项，但是实际是没有效果的。
+     */
     @Override
     public <T> Invoker<T> getInvoker(T proxy, Class<T> type, URL url) throws RpcException {
         return proxyFactory.getInvoker(proxy, type, url);
