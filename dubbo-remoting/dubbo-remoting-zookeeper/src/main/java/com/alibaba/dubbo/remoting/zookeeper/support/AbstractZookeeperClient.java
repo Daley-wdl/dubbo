@@ -33,10 +33,23 @@ public abstract class AbstractZookeeperClient<TargetChildListener> implements Zo
 
     protected static final Logger logger = LoggerFactory.getLogger(AbstractZookeeperClient.class);
 
+    /**
+     * 注册中心 URL
+     */
     private final URL url;
 
+    /**
+     * StateListener 集合
+     */
     private final Set<StateListener> stateListeners = new CopyOnWriteArraySet<StateListener>();
 
+    /**
+     * ChildListener 集合
+     *
+     * key1：节点路径
+     * key2：ChildListener 对象
+     * value ：监听器具体对象。不同 Zookeeper 客户端，实现会不同。
+     */
     private final ConcurrentMap<String, ConcurrentMap<ChildListener, TargetChildListener>> childListeners = new ConcurrentHashMap<String, ConcurrentMap<ChildListener, TargetChildListener>>();
 
     private volatile boolean closed = false;
@@ -52,6 +65,7 @@ public abstract class AbstractZookeeperClient<TargetChildListener> implements Zo
 
     @Override
     public void create(String path, boolean ephemeral) {
+        // 循环创建父路径
         int i = path.lastIndexOf('/');
 
         if (i > 0) {
@@ -62,9 +76,10 @@ public abstract class AbstractZookeeperClient<TargetChildListener> implements Zo
                 create(parentPath, false);
             }
         }
-        // 根据 ephemeral 的值创建临时或持久节点
+        // 创建临时节点
         if (ephemeral) {
             createEphemeral(path);
+            // 创建持久节点
         } else {
             createPersistent(path);
         }
@@ -96,6 +111,7 @@ public abstract class AbstractZookeeperClient<TargetChildListener> implements Zo
             listeners.putIfAbsent(listener, createTargetChildListener(path, listener));
             targetListener = listeners.get(listener);
         }
+        // 向 Zookeeper ，真正发起订阅
         return addTargetChildListener(path, targetListener);
     }
 
