@@ -119,6 +119,7 @@ public class RedisRegistry extends FailbackRegistry {
             addresses.addAll(Arrays.asList(backups));
         }
 
+        // 创建 JedisPool 对象
         String password = url.getPassword();
         for (String address : addresses) {
             int i = address.indexOf(':');
@@ -140,6 +141,7 @@ public class RedisRegistry extends FailbackRegistry {
             }
         }
 
+        // 解析重连周期
         this.reconnectPeriod = url.getParameter(Constants.REGISTRY_RECONNECT_PERIOD_KEY, Constants.DEFAULT_REGISTRY_RECONNECT_PERIOD);
         String group = url.getParameter(Constants.GROUP_KEY, DEFAULT_ROOT);
         if (!group.startsWith(Constants.PATH_SEPARATOR)) {
