@@ -20,12 +20,16 @@ package com.alibaba.dubbo.common.compiler;
 import com.alibaba.dubbo.common.extension.SPI;
 
 /**
+ * @SPI("javassist") 注解，使用 Dubbo SPI 机制，默认拓展为 Javassist
+ *
  * Compiler. (SPI, Singleton, ThreadSafe)
  */
 @SPI("javassist")
 public interface Compiler {
 
     /**
+     * 编译 Java 代码字符串
+     *
      * Compile java source code.
      *
      * @param code        Java source code

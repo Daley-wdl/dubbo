@@ -27,8 +27,16 @@ import com.alibaba.dubbo.common.extension.ExtensionLoader;
 @Adaptive
 public class AdaptiveCompiler implements Compiler {
 
+    /**
+     * 默认编辑器的拓展名
+     */
     private static volatile String DEFAULT_COMPILER;
 
+    /**
+     * 在 ApplicationConfig 中传入
+     * eg： <dubbo:application compiler="javassist" />
+     * @param compiler
+     */
     public static void setDefaultCompiler(String compiler) {
         DEFAULT_COMPILER = compiler;
     }

@@ -47,6 +47,7 @@ public abstract class AbstractProxyFactory implements ProxyFactory {
                 }
             }
         }
+        // 增加 EchoService 接口，用于回生测试。
         if (interfaces == null) {
             interfaces = new Class<?>[]{invoker.getInterface(), EchoService.class};
         }
